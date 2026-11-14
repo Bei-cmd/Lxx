@@ -1,0 +1,808 @@
+/* Quiet blue atmosphere for the diary list below the unchanged hero. */
+#web_bg {
+  background:
+    radial-gradient(ellipse at 88% 16%, rgba(202, 222, 250, 0.42), transparent 34%),
+    radial-gradient(ellipse at 12% 78%, rgba(218, 228, 250, 0.46), transparent 38%),
+    linear-gradient(135deg, #edf5ff 0%, #f4f7fc 48%, #e8f1fb 100%);
+  background-attachment: fixed;
+}
+
+/* Blend only the last few pixels of the hero into the diary background. */
+#page-header.full_page {
+  isolation: isolate;
+}
+
+#page-header.full_page::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  height: 40px;
+  background: linear-gradient(
+    to bottom,
+    rgba(232, 241, 251, 0) 0%,
+    rgba(232, 241, 251, 0.34) 58%,
+    #e8f1fb 100%
+  );
+  content: '';
+  pointer-events: none;
+}
+
+#page-header.full_page #scroll-down {
+  z-index: 2;
+}
+
+/* Compact, title-first diary rows. */
+#recent-posts {
+  width: min(100%, 960px);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+#recent-posts > .recent-post-item:not(:first-child):not(.ads-wrap) {
+  margin-top: 16px;
+}
+
+#recent-posts > .recent-post-item:not(.ads-wrap) {
+  position: relative;
+  min-height: 112px;
+  height: auto;
+  overflow: hidden;
+  border: 1px solid rgba(136, 164, 198, 0.16);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 8px 28px rgba(45, 78, 116, 0.07);
+  backdrop-filter: blur(12px);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+  cursor: pointer;
+}
+
+#recent-posts > .recent-post-item:not(.ads-wrap):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(45, 78, 116, 0.11);
+}
+
+#recent-posts > .recent-post-item > .recent-post-info.no-cover {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 6px;
+  padding: 20px 30px;
+  width: 100%;
+}
+
+#recent-posts .article-title {
+  position: static;
+  order: 2;
+  color: #26364a;
+  font-size: 1.25em;
+  font-weight: 600;
+  line-height: 1.45;
+  -webkit-line-clamp: 2;
+}
+
+/* Extend the existing semantic title link across the whole diary card. */
+#recent-posts > .recent-post-item:not(.ads-wrap) .article-title::after {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  content: '';
+}
+
+#recent-posts > .recent-post-item:not(.ads-wrap) .article-title:focus-visible::after {
+  outline: 3px solid rgba(91, 143, 202, 0.72);
+  outline-offset: 3px;
+}
+
+#recent-posts .article-meta-wrap {
+  order: 1;
+  margin: 0;
+  color: #8793a2;
+  font-size: 0.86em;
+  white-space: nowrap;
+}
+
+#recent-posts .article-meta-label,
+#recent-posts .article-meta-wrap .fa-calendar-alt {
+  display: none;
+}
+
+/* A quiet pill keeps search legible over the existing hero image. */
+#search-button > a.site-page {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 15px;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  border-radius: 999px;
+  background: rgba(24, 40, 58, 0.16);
+  box-shadow: 0 4px 16px rgba(20, 35, 52, 0.08);
+  backdrop-filter: blur(12px);
+  text-shadow: none;
+  transition: background-color 180ms ease, transform 180ms ease;
+}
+
+#search-button > a.site-page::after {
+  display: none;
+}
+
+#search-button > a.site-page:hover {
+  transform: translateY(-1px);
+  background: rgba(24, 40, 58, 0.28);
+}
+
+/* Refined local search dialog and backdrop. */
+#search-mask {
+  background: rgba(22, 39, 59, 0.42);
+  backdrop-filter: blur(8px);
+}
+
+#local-search .search-dialog {
+  top: 9vh;
+  left: 50%;
+  box-sizing: border-box;
+  margin-left: 0;
+  padding: 26px;
+  width: min(680px, calc(100vw - 32px));
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 24px 80px rgba(17, 35, 56, 0.22);
+  transform: translateX(-50%);
+  --search-height: 78vh;
+}
+
+#local-search .search-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  color: #26364a;
+  font-size: 1.15em;
+  font-weight: 600;
+}
+
+#local-search .search-close-button {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #f0f4f8;
+  color: #687789;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+#local-search .search-close-button:hover {
+  background: #e3edf8;
+  color: #315d91;
+}
+
+#local-search .local-search-box input {
+  box-sizing: border-box;
+  min-height: 48px;
+  padding: 10px 16px;
+  border: 1px solid #d8e3ef;
+  border-radius: 14px;
+  background: #f5f8fc;
+  color: #26364a;
+  box-shadow: inset 0 1px 2px rgba(36, 58, 82, 0.03);
+  transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+#local-search .local-search-box input:focus {
+  border-color: #8bb5e4;
+  outline: none;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(117, 165, 216, 0.16);
+}
+
+#local-search .search-dialog hr {
+  margin: 18px 0;
+  border: 0;
+  border-top: 1px solid #e8edf3;
+  background: none;
+}
+
+#local-search .local-search-hit-item {
+  padding: 10px 0 10px 22px;
+}
+
+#local-search .local-search-hit-item::before {
+  top: 1.05em;
+  border-width: 2px;
+  border-color: #9ab9dc;
+}
+
+#local-search .local-search-hit-item a {
+  color: #30445d;
+}
+
+#local-search .local-search-hit-item a:hover {
+  color: #4277b4;
+}
+
+#local-search .search-keyword {
+  color: #4a83c2;
+}
+
+@media (max-width: 768px) {
+  #recent-posts {
+    width: 100%;
+  }
+
+  #recent-posts > .recent-post-item > .recent-post-info.no-cover {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px 22px;
+  }
+
+  #recent-posts .article-title {
+    font-size: 1.12em;
+  }
+
+  #local-search .search-dialog {
+    top: 7vh;
+    left: 16px;
+    padding: 22px;
+    width: calc(100vw - 32px);
+    height: auto;
+    max-height: 86vh;
+    border-radius: 22px;
+    transform: none;
+  }
+
+  #local-search .search-result-list {
+    max-height: calc(70vh - 170px) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #recent-posts > .recent-post-item,
+  #search-button > a.site-page,
+  #local-search .local-search-box input {
+    transition: none;
+  }
+}
+
+/* Golden-ratio diary reader: a compact, scrollable rail beside the article. */
+#content-inner.layout.hide-aside:has(> .diary-reader-layout) {
+  box-sizing: border-box;
+  width: min(1440px, calc(100% - 64px));
+  max-width: none;
+  margin: 0 auto;
+}
+
+.diary-reader-layout {
+  display: grid;
+  grid-template-columns: minmax(250px, 38.2fr) minmax(0, 61.8fr);
+  align-items: start;
+  gap: clamp(20px, 3vw, 44px);
+  margin: 28px auto 64px;
+}
+
+.diary-rail {
+  position: sticky;
+  top: 24px;
+  min-width: 0;
+  display: flex;
+  height: min(76vh, 900px);
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.58);
+  box-shadow: 0 16px 48px rgba(49, 83, 122, 0.09);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.diary-rail-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 22px 14px;
+  color: #26364a;
+}
+
+.diary-rail-heading h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 650;
+}
+
+.diary-rail-heading > span {
+  color: #8290a0;
+  font-size: 0.82rem;
+}
+
+.diary-rail-list {
+  display: grid;
+  align-content: start;
+  grid-auto-rows: max-content;
+  flex: 1 1 auto;
+  min-height: 0;
+  gap: 6px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 10px 12px;
+  scrollbar-color: rgba(87, 133, 184, 0.34) transparent;
+  scrollbar-width: thin;
+}
+
+.diary-year-group {
+  min-width: 0;
+  padding: 0 8px 5px;
+}
+
+.diary-year-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 46px;
+  padding: 0 8px;
+  border-bottom: 1px solid rgba(111, 151, 192, 0.2);
+  color: #557a9f;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.diary-year-summary::-webkit-details-marker {
+  display: none;
+}
+
+.diary-year-summary::after {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  border-right: 1.7px solid #7897b8;
+  border-bottom: 1.7px solid #7897b8;
+  content: '';
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 180ms ease;
+}
+
+.diary-year-group:not([open]) > .diary-year-summary::after {
+  transform: translateY(1px) rotate(-45deg);
+}
+
+.diary-year-summary:hover,
+.diary-year-summary:focus-visible {
+  color: #315f96;
+  outline: none;
+}
+
+.diary-year-label {
+  font-size: 0.94rem;
+  font-weight: 650;
+  letter-spacing: 0.035em;
+}
+
+.diary-year-count {
+  display: inline-grid;
+  min-width: 24px;
+  height: 24px;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(117, 160, 204, 0.12);
+  color: #7890a8;
+  font-size: 0.73rem;
+  line-height: 1;
+}
+
+.diary-year-items {
+  display: grid;
+  gap: 4px;
+  padding: 2px 0 5px;
+}
+
+.diary-rail-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 38.2fr) minmax(0, 61.8fr);
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  min-height: 76px;
+  box-sizing: border-box;
+  padding: 12px 14px 12px 17px;
+  border: 1px solid rgba(136, 164, 198, 0.13);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.56);
+  color: #26364a;
+  text-decoration: none;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.diary-rail-item:hover,
+.diary-rail-item:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(120, 163, 207, 0.26);
+  background: rgba(255, 255, 255, 0.9);
+  color: #315f96;
+  box-shadow: 0 6px 18px rgba(49, 83, 122, 0.08);
+  outline: none;
+}
+
+.diary-rail-item.is-current {
+  border-color: rgba(120, 163, 207, 0.28);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 8px 22px rgba(49, 83, 122, 0.09);
+}
+
+.diary-rail-item.is-current::before {
+  position: absolute;
+  inset: 12px auto 12px 0;
+  width: 3px;
+  border-radius: 3px;
+  background: #77a8d8;
+  content: '';
+}
+
+.diary-rail-item time {
+  grid-column: 1;
+  color: #84909d;
+  font-size: 0.76rem;
+  line-height: 1.3;
+}
+
+.diary-rail-title {
+  grid-column: 2;
+  overflow: hidden;
+  font-size: 0.91rem;
+  font-weight: 560;
+  line-height: 1.45;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.diary-feature-stage,
+.diary-post-pane {
+  min-width: 0;
+}
+
+.diary-feature-card {
+  display: flex;
+  min-height: clamp(300px, 48vh, 560px);
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: clamp(30px, 5vw, 68px);
+  border: 1px solid rgba(255, 255, 255, 0.88);
+  border-radius: 30px;
+  background-color: rgba(255, 255, 255, 0.88);
+  background-image: linear-gradient(rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.84)), var(--diary-cover-image, linear-gradient(135deg, #f7fbff, #e5f0fc));
+  background-position: center;
+  background-size: cover;
+  box-shadow: 0 22px 64px rgba(49, 83, 122, 0.12);
+  color: #26364a;
+  text-decoration: none;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+button.diary-feature-card {
+  width: 100%;
+  font: inherit;
+}
+
+.diary-feature-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 28px 72px rgba(49, 83, 122, 0.16);
+}
+
+.diary-feature-kicker {
+  margin-bottom: 22px;
+  color: #6585a7;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.diary-feature-card time {
+  color: #84909d;
+  font-size: 0.9rem;
+}
+
+.diary-feature-card h1 {
+  margin: 12px 0 28px;
+  color: #26364a;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  line-height: 1.25;
+}
+
+.diary-feature-action {
+  color: #4779ad;
+  font-size: 0.96rem;
+  font-weight: 600;
+}
+
+.diary-feature-stage > [hidden] {
+  display: none !important;
+}
+
+.diary-reader-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 12px;
+  color: #52677e;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+#diary-reader-back {
+  padding: 8px 13px;
+  border: 1px solid rgba(111, 151, 192, 0.24);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.68);
+  color: #4779ad;
+  cursor: pointer;
+}
+
+#diary-article-frame {
+  display: block;
+  width: 100%;
+  height: min(78vh, 940px);
+  min-height: 520px;
+  overflow: auto;
+  border: 1px solid rgba(255, 255, 255, 0.88);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.91);
+  box-shadow: 0 22px 64px rgba(49, 83, 122, 0.12);
+}
+
+#diary-article-frame[hidden] {
+  display: none !important;
+}
+
+.diary-post-pane {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: clamp(24px, 4vw, 52px);
+  border: 1px solid rgba(255, 255, 255, 0.88);
+  border-radius: 30px;
+  background-color: rgba(255, 255, 255, 0.91);
+  background-image: linear-gradient(rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.84)), var(--diary-cover-image, linear-gradient(135deg, #f7fbff, #e5f0fc));
+  background-position: center;
+  background-size: cover;
+  box-shadow: 0 22px 64px rgba(49, 83, 122, 0.12);
+}
+
+/* Previous/next diary cards use the same soft surface and a 38:62 split. */
+.diary-post-pane #pagination.pagination-post {
+  display: grid;
+  grid-template-columns: minmax(0, 38.2fr) minmax(0, 61.8fr);
+  gap: 16px;
+  overflow: visible;
+  margin: 30px 0 0;
+  padding: 0;
+  background: transparent;
+}
+
+.diary-post-pane #pagination.pagination-post > .prev-post,
+.diary-post-pane #pagination.pagination-post > .next-post {
+  width: auto !important;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(134, 165, 201, 0.2);
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(231, 241, 252, 0.88));
+  box-shadow: 0 10px 30px rgba(49, 83, 122, 0.08);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.diary-post-pane #pagination.pagination-post > .prev-post:hover,
+.diary-post-pane #pagination.pagination-post > .next-post:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgba(49, 83, 122, 0.13);
+}
+
+.diary-post-pane #pagination.pagination-post > .prev-post a,
+.diary-post-pane #pagination.pagination-post > .next-post a {
+  height: clamp(132px, 17vh, 178px);
+  border-radius: inherit;
+  background: transparent;
+}
+
+.diary-post-pane #pagination.pagination-post .cover {
+  opacity: 0.12;
+  filter: saturate(0.7);
+  transition: opacity 200ms ease, transform 400ms ease;
+}
+
+.diary-post-pane #pagination.pagination-post > .prev-post:hover .cover,
+.diary-post-pane #pagination.pagination-post > .next-post:hover .cover {
+  opacity: 0.2;
+}
+
+.diary-post-pane #pagination.pagination-post .pagination-info {
+  z-index: 1;
+  box-sizing: border-box;
+  padding: 22px 28px;
+}
+
+.diary-post-pane #pagination.pagination-post .label {
+  color: #71849a;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+}
+
+.diary-post-pane #pagination.pagination-post .prev_info,
+.diary-post-pane #pagination.pagination-post .next_info {
+  display: block;
+  margin-top: 8px;
+  color: #26364a;
+  font-size: clamp(0.95rem, 1.4vw, 1.12rem);
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .diary-post-pane #pagination.pagination-post {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .diary-post-pane #pagination.pagination-post > .prev-post a,
+  .diary-post-pane #pagination.pagination-post > .next-post a {
+    height: 132px;
+  }
+
+  .diary-post-pane #pagination.pagination-post .pagination-info {
+    padding: 20px 22px;
+  }
+}
+
+@media (max-width: 900px) {
+  #content-inner.layout.hide-aside:has(> .diary-reader-layout) {
+    width: min(100% - 32px, 720px);
+  }
+
+  .diary-reader-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+    margin-top: 20px;
+  }
+
+  .diary-rail {
+    position: relative;
+    top: auto;
+    height: 300px;
+  }
+
+  .diary-rail-list {
+    max-height: none;
+  }
+
+  .diary-feature-card {
+    min-height: 320px;
+  }
+
+  #diary-article-frame {
+    height: 72vh;
+    min-height: 440px;
+    border-radius: 22px;
+  }
+}
+
+@media (max-width: 520px) {
+  #content-inner.layout.hide-aside:has(> .diary-reader-layout) {
+    width: calc(100% - 24px);
+  }
+
+  .diary-reader-layout {
+    gap: 14px;
+    margin-bottom: 38px;
+  }
+
+  .diary-rail,
+  .diary-feature-card,
+  .diary-post-pane {
+    border-radius: 21px;
+  }
+
+  .diary-feature-card,
+  .diary-post-pane #post {
+    padding: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .diary-rail-item,
+  .diary-feature-card {
+    transition: none;
+  }
+}
+
+/* Keep the footer and floating controls in the same blue palette. */
+#footer {
+  background-color: #5c8fcd;
+  background-image: linear-gradient(120deg, #4f83c3 0%, #6f9ed5 54%, #8bb4e4 100%);
+}
+
+#rightside #rightside-config-show > button,
+#rightside #rightside-config-show > a,
+#rightside #rightside-config-hide > button {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  background-image: linear-gradient(145deg, #5b91d1 0%, #79a8df 100%);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(49, 83, 122, 0.17);
+  transition: background-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+#rightside #rightside-config-show > button:hover,
+#rightside #rightside-config-show > a:hover,
+#rightside #rightside-config-hide > button:hover {
+  background-image: linear-gradient(145deg, #4e83c4 0%, #6a9bd5 100%);
+  box-shadow: 0 8px 20px rgba(49, 83, 122, 0.22);
+}
+
+#rightside #rightside-config-show > button:focus-visible,
+#rightside #rightside-config-show > a:focus-visible,
+#rightside #rightside-config-hide > button:focus-visible {
+  outline: 3px solid rgba(98, 150, 210, 0.4);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  #rightside #rightside-config-show > button:hover,
+  #rightside #rightside-config-show > a:hover,
+  #rightside #rightside-config-hide > button:hover {
+    transform: translateY(-1px);
+  }
+}
+
+/* The existing sakura canvas remains independent; snow uses compositor transforms. */
+#snowfall-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 11;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.snowfall-flake {
+  position: absolute;
+  top: -8vh;
+  display: block;
+  font-family: system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1;
+  text-shadow: 0 0 7px rgba(255, 255, 255, 0.9), 0 0 13px rgba(186, 220, 250, 0.65);
+  will-change: transform;
+  animation: snowfall-drift var(--snow-duration, 18s) linear infinite;
+}
+
+@keyframes snowfall-drift {
+  from {
+    transform: translate3d(0, -8vh, 0) rotate(0deg);
+  }
+  to {
+    transform: translate3d(var(--snow-drift, 24px), 112vh, 0) rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .snowfall-flake {
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #rightside #rightside-config-show > button,
+  #rightside #rightside-config-show > a,
+  #rightside #rightside-config-hide > button {
+    transition: none;
+  }
+}
